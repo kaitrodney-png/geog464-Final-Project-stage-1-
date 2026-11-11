@@ -91,3 +91,10 @@ Cleaned features: 22777
 Cleaned columns: ['Class', 'geometry']
 
 In buffer layer removed overlapping areas 
+
+
+Fire : 
+Original Fire features: 6
+Remaining Fire features: 6
+Original area coverage 211667532266.19748
+Remaining area coverage 104683198515.56712
