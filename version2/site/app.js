@@ -183,7 +183,7 @@ disturbanceLegend.onAdd = function () {
 
 disturbanceLegend.addTo(map);
 
-map.fitBounds(allDisturbances.getBounds());
+map.fitBounds(disturbanceData.getBounds());
   
 }).catch(function (err) {
   console.error("GeoJSON loading failed:", err);
