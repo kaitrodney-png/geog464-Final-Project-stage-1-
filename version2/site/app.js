@@ -64,12 +64,10 @@ Promise.all([
   fetch('../Data/Take2/Pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/ValdOr2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Quebec_HU_Cutblocks.geojson').then(response  => response.json()), 
-  fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json()),
-  fetch('../Data/Cleaned/Caribou_Fire_Web.geojson').then(response  => response.json())
-
+  fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json())
     // PART 8: change the file name to your own
 ])
-  .then(function ([forestierData, gaspesieData, PolyData, ManicouaganPolyData, ManouanePolyData, PipmuacanPolyData, ValdOrPolyData, QubecPolyData, QuebecWithoutCutblocksData, FireData]) {
+  .then(function ([forestierData, gaspesieData, PolyData, ManicouaganPolyData, ManouanePolyData, PipmuacanPolyData, ValdOrPolyData, QubecPolyData, QuebecWithoutCutblocksData]) {
    
   const forestierLayer = L.geoJSON(forestierData, {
     style: {
@@ -91,15 +89,39 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
     onEachFeature: addCaribouPopup
   }).addTo(map);
 
-  const FireLayer = L.geoJSON(FireData, {
-    
-    style: {
-      color: '#e82214',
-      fillColor: '#e82214',
-      weight: 2,
-      fillOpacity: 0.35
-    },
-  }).addTo(map);
+ // Placeholder for the fire layer
+const FirePlaceholder = L.layerGroup().addTo(map);
+
+// Load fire data independently
+let FireLayer = null;
+
+fetch('../Data/Cleaned/Caribou_Fire_Web.geojson')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Fire file could not be loaded: ' + response.status);
+    }
+    return response.json();
+  })
+  .then(FireData => {
+
+    FireLayer = L.geoJSON(FireData, {
+      style: {
+        color: '#e82214',
+        fillColor: '#e82214',
+        weight: 2,
+        fillOpacity: 0.35
+      }
+    });
+
+    if (map.hasLayer(FirePlaceholder)) {
+      FirePlaceholder.addLayer(FireLayer);
+    }
+
+    console.log('Fire layer loaded successfully!');
+  })
+  .catch(err => {
+    console.error('Fire layer failed to load:', err);
+  });
 
 const disturbanceData = [
   PolyData,
@@ -140,7 +162,7 @@ L.control.layers({
   ])
 }, {
   'Anthropogenic disturbances': allDisturbances,
-  'Natural disturbances': FireLayer
+    'Natural disturbances': FirePlaceholder
 }, {
   collapsed: false
 }).addTo(map);
