@@ -1,20 +1,36 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>GEOG 464 Mammal Habitats of Quebec</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <!-- Leaflet: the map library. Loaded from the internet, nothing to install. -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Key Forest Caribou Populations in Quebec</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>GEOG 464 Mammal Habitats of Quebec</h1>
-    <p id="status">Loading places...</p>
-  </header>
-  <!-- STRUCTURE: the map needs one container to draw into. app.js looks for id="map". Do not rename one without the other. -->
-  <div id="map"></div>
+  <div class="page">
+    <main class="story">
+      <h1>Key Caribou Populations in Quebec.</h1>
+      <p class="lede"> Quebec is home to some pretty unique ecosystems, within these ecosystems are wildlife species that only thrive in these environments. One being Caribou, quebec was once home to a very large and diverse ppopulation. Over the last decade, Caribou have become increasingly vulnerable. One of the main threats to this vital species is the loss of their habitat due to human activities. As well as an increasing number of trafic and roads going through their fragile habitats. The goal of this map is to be able to see this crutial habitats alongside the Quebec road networdk to be able to pinpoint areas of concern to furthr investigate.</p>
+      <p><strong>This map is for</strong> folks in wildlife management.</p>
+      <p><strong>How to use this map:</strong> You can navigate through different Caribou populations and groups, as well as click on them to various key information such as their vulnerability level and threat level. The vulnerability level is given on a scale of S1 -S5 with S1 being the most vulnerable and S5 being the least vulnerable.</p>
+      <p id="status">Loading...</p>
+
+      <section>
+        <h2>Not in this iteration</h2>
+        <p>This iteration will not identify where key hot spots are but will identify areas of concern to further investigate.</p>
+      </section>
+      <section>
+        <h2>Where this comes from</h2>
+        <ul>
+          <li><a href="[https://www.donneesquebec.ca/recherche/dataset/aires-de-repartition-des-populations-de-caribous-forestier]">Aire_reparitition_populations_caribouForestier</a>, 	MINISTRY OF THE ENVIRONMENT, THE FIGHT AGAINST CLIMATE CHANGE, WILDLIFE AND PARKS, Attribution (CC-BY 4.0), accessed Sept. 17 2026. Missing several columns they were removed from the simplified data such as EO_ID, OTHER_NM, EOTYPE, METHOD as the information was not super helpful for the purpose of this map. </li>
+          <li><a href="[https://www.donneesquebec.ca/recherche/dataset/aire-de-repartition-caribous-montagnard-gaspesie ]">Aire_reparitition_populations_caribouGaspesie</a>, 	MINISTRY OF THE ENVIRONMENT, THE FIGHT AGAINST CLIMATE CHANGE, WILDLIFE AND PARKS, Attribution (CC-BY 4.0), accessed Oct 18th 2026. Missing several columns theywere removed from the simplified data such as EO_ID, OTHER_NM, EOTYPE, METHOD as the information was not super helpful for the purpose of this map. </li>
+
+        </ul>
+      </section>
+    </main>
+    <div id="map"></div>
+  </div>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="app.js"></script>
 </body>
