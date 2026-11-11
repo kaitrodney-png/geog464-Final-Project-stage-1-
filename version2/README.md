@@ -1,11 +1,11 @@
 # GEOG 464 Final Project: Mammal Populations ans traffic distribution in Quebec 
 
 ## A1: Project desription 
-    **Problem:** Identify potenital areeas of conflict between wildlife species and road traffic to see where can be further studied 
+    **Problem:** Identify potenital areeas of vulnerability amongst Caribou polulations in Quebec 
     **Audience:** Wildlife management
     **Core action:** Filter through Caribou habitats/populations to identify key ares of importance in terms of urban planning
     **Boundary:** Will not identify areas to implment new measures or wildlife control ony indentify areas of interst 
-    **Data:** Road usage data and wildlife habits of different Caribou species in Quebec
+    **Data:** Disturbance data and wildlife habits of different Caribou species in Quebec
 
 
 **AI DISCOURSE:**
@@ -17,7 +17,6 @@
 
 
 **DATA SET 1**
-
     **Title:** Aires de répartition des populations locales de caribous des bois, écotype forestier, au Québec
     **Publisher:** Ministry of the Environment, the Fight Against Climate Change, Wildlife and Parks
     **Link:** https://www.donneesquebec.ca/recherche/dataset/aires-de-repartition-des-populations-de-caribous-forestier
@@ -41,6 +40,30 @@
     **The System Converted from:** The distribution area data are recorded according to the projected coordinate system Quebec Lambert (EPSG: 32198).
     **IMPORTANT INFORMATION** Information regarding this data and for all further inquires the main source is asked to be given with the data 
         Lesmerises, F. and M.-H. St-Laurent. 2018. Influence of habitat disturbance rate, regional coyote abundance and predator control on the demographic parameters of the Gaspé-Atlantic caribou population. Scientific report submitted to Environment Canada – Canadian Wildlife Service, Rimouski, Quebec. 22 p. + 8 appendices
+
+
+ **DATA SET 3**
+    **Title:** Anthropogenic disturbance footprint within boreal caribou ranges across Canada 
+    **Publisher:** Government of Canada; Environment and Climate Change Canada
+    **Link:** https://www.donneesquebec.ca/recherche/dataset/aire-de-repartition-caribous-montagnard-gaspesie 
+    **Licence:**  Open Government Licence - Canada
+    **Date Accessed:** NOV 3th 2026
+    **What was Changed:** I downloaded only the quebec content, then I broke it down into seperate layers which were each treated individually in all of them the majority of collumns were removed to simplify the data: 
+
+        For the Quebec2020 data set I removed overlapping areas and boundaries within the other data sets that were within the other data sets, I also seperated the cutblocks data into its own file to make it more managable. 
+            Original Quebec features: 22783
+            Remaining Quebec features: 22777
+            Area removed: 229306.68899456185
+
+        For the buffer area the overlapping areas were removed :
+
+
+        For the Fire layer that was created, I removed the overlapping areas and boundaries from the other data sets:
+            Original Fire features: 6
+            Remaining Fire features: 6
+            Original area coverage 211667532266.19748
+            Remaining area coverage 104683198515.56712
+            
 
 A good prompt pattern to use for your AI:
 
@@ -71,30 +94,11 @@ Things to do .
 - Clean up popups with relevant population information.
 - Explain what each disturbance layer represents.
 
+Git code to save it:
+#git status
+#git add .
+#git commit -m "what you changed, in a few words"
+#git push
 
-
-
-
-Quebec dataset --> removed overlapping features and boundaries within the other data sets 
-Quebec features touching regional layers: 192
-Overlap area: 229306.68899456185
-Percentage overlapping: 0.0006977198948528956
-Original Quebec features: 22783
-Remaining Quebec features: 22777
-
-
-Original features: 22777
-Cut-block features: 16038
-Cut-block features: 16038
-Other features: 6739
-Cleaned features: 22777
-Cleaned columns: ['Class', 'geometry']
-
-In buffer layer removed overlapping areas 
-
-
-Fire : 
-Original Fire features: 6
-Remaining Fire features: 6
-Original area coverage 211667532266.19748
-Remaining area coverage 104683198515.56712
+to go back to the last version that worked 
+#git restore site/app.js 
