@@ -54,7 +54,7 @@ My edge case is ...
  **DATA SET 3**
     **Title:** Anthropogenic disturbance footprint within boreal caribou ranges across Canada 
     **Publisher:** Government of Canada; Environment and Climate Change Canada
-    **Link:** https://www.donneesquebec.ca/recherche/dataset/aire-de-repartition-caribous-montagnard-gaspesie 
+    **Link:**https://data-donnees.az.ec.gc.ca/data/species/developplans/anthropogenic-disturbance-footprint-within-boreal-caribou-ranges-across-canada-as-interpreted-from-2008-2010-Landsat-satellite-imagery-Updated-to-2012-range-boundaries)?lang=en  
     **Licence:**  Open Government Licence - Canada
     **Date Accessed:** NOV 3th 2026
     **What was Changed:** I downloaded only the quebec content, then I broke it down into seperate layers which were each treated individually in all of them the majority of collumns were removed to simplify the data: 
