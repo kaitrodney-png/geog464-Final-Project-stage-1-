@@ -65,10 +65,11 @@ Promise.all([
   fetch('../Data/Take2/ValdOr2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Quebec_HU_Cutblocks.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json()),
+  fetch('../Data/Take2/Caribou_Fire_Web.geojson').then(response  => response.json())
 
     // PART 8: change the file name to your own
 ])
-  .then(function ([forestierData, gaspesieData, PolyData, ManicouaganPolyData, ManouanePolyData, PipmuacanPolyData, ValdOrPolyData, QubecPolyData, QuebecWithoutCutblocksData]) {
+  .then(function ([forestierData, gaspesieData, PolyData, ManicouaganPolyData, ManouanePolyData, PipmuacanPolyData, ValdOrPolyData, QubecPolyData, QuebecWithoutCutblocksData, FireData]) {
    
   const forestierLayer = L.geoJSON(forestierData, {
     style: {
@@ -88,6 +89,15 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
       fillOpacity: 0.35
     },
     onEachFeature: addCaribouPopup
+  }).addTo(map);
+
+  const FireLayer = L.geoJSON(FireData, {
+    style: {
+      color: '#e82214',
+      fillColor: '#e82214',
+      weight: 2,
+      fillOpacity: 0.35
+    },
   }).addTo(map);
 
 const disturbanceData = [
@@ -128,7 +138,8 @@ L.control.layers({
     gaspesieLayer
   ])
 }, {
-  'Anthropogenic disturbances': allDisturbances
+  'Anthropogenic disturbances': allDisturbances,
+  'Natural disturbances': FireLayer
 }, {
   collapsed: false
 }).addTo(map);
