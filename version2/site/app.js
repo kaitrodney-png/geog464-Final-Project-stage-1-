@@ -2,7 +2,7 @@
 // Lab 3. Parts 6 to 8 of the handout ask you to change the lines marked PART.
 
 // PART 7 will change this line. Leave it for now.
-const map = L.map('map', { preferCanvas: true }).setView([47.15, -82.64], 12);
+const map = L.map('map', { preferCanvas: true })
 
 // Base map: OpenStreetMap. It needs the page served by Live Server, which is how
 // this lab opens it. A page opened by double-click gets "Access blocked" tiles.
@@ -61,7 +61,7 @@ Promise.all([
   fetch('../Data/Take2/Charlevoix2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Manicouagan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Manouane2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
-  fetch('../Data/Take2/Pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
+  fetch('../Data/Take2/pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/ValdOr2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Quebec_HU_Cutblocks.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json()),
@@ -183,7 +183,7 @@ disturbanceLegend.onAdd = function () {
 
 disturbanceLegend.addTo(map);
 
-map.fitBounds(disturbanceData.getBounds());
+map.fitBounds(forestierLayer.getBounds());
   
 }).catch(function (err) {
   console.error("GeoJSON loading failed:", err);
