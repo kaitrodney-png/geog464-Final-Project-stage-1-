@@ -61,7 +61,7 @@ Promise.all([
   fetch('../Data/Take2/Charlevoix2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Manicouagan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Manouane2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
-  fetch('../Data/Take2/pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
+  fetch('../Data/Take2/Pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/ValdOr2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Quebec_HU_Cutblocks.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json()),
