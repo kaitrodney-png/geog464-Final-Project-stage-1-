@@ -13,7 +13,33 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // PART 6: how many pipes to draw. Start small, then try them all.
 const LIMIT = Infinity;  // change to 1000, 10000, or Infinity
-const colours = { Combined: '#d62728', Sanitary: '#8c564b', Storm: '#1f77b4' };
+const disturbanceColours = {
+  Cutblock: '#be621b',
+  Settlement: '#7570b3',
+  Mine: '#e7298a',
+  Agriculture: '#4d7e16',
+  Harvest: '#1b9e77',
+  'Oil/Gas': '#e6ab02',
+  Unknown: '#6b7280'
+};
+
+function styleDisturbance(feature) {
+  const colour = disturbanceColours[feature.properties.Class] || disturbanceColours.Unknown;
+  return {
+    color: colour,
+    fillColor: colour,
+    weight: 1.5,
+    fillOpacity: 0.45
+  };
+}
+
+function addDisturbancePopup(feature, layer) {
+  const disturbanceClass = feature.properties.Class || 'Unknown';
+  layer.bindPopup(
+    '<h3>Disturbance Type</h3>' +
+    '<strong>' + disturbanceClass + '</strong>'
+  );
+}
 
 function addCaribouPopup(feature, layer) {
   const p = feature.properties;
@@ -35,7 +61,7 @@ Promise.all([
   fetch('../Data/Take2/Charlevoix2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Manicouagan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Manouane2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
-  fetch('../Data/Take2/Pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
+  fetch('../Data/Take2/pipmuacan2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/ValdOr2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Quebec_HU_Cutblocks.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json()),
@@ -46,8 +72,8 @@ Promise.all([
    
   const forestierLayer = L.geoJSON(forestierData, {
     style: {
-      color: '#04522a',
-      fillColor: '#04522a',
+      color: '#8b8066',
+      fillColor: '#8b8066',
       weight: 2,
       fillOpacity: 0.35
     },
@@ -64,87 +90,101 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
     onEachFeature: addCaribouPopup
   }).addTo(map);
 
+const disturbanceData = [
+  PolyData,
+  ManicouaganPolyData,
+  ManouanePolyData,
+  PipmuacanPolyData,
+  ValdOrPolyData,
+  QubecPolyData,
+  QuebecWithoutCutblocksData
+];
 
-const PolyLayer = L.geoJSON(PolyData, {
-    style: {
-      color: '#FFD700',
-      fillColor: '#FFD700',
-      weight: 2,
-      fillOpacity: 0.35
-    },
+const classLayers = {};
+
+Object.keys(disturbanceColours).forEach(function (className) {
+  const features = disturbanceData.flatMap(function (data) {
+    return data.features.filter(function (feature) {
+      return (feature.properties.Class || 'Unknown') === className;
+    });
   });
 
-const ManicouaganLayer = L.geoJSON(ManicouaganPolyData, {
-  style: {
-    color: '#8E44AD',
-    fillColor: '#8E44AD',
-    weight: 2,
-    fillOpacity: 0.35
-  },
+  classLayers[className] = L.geoJSON({
+    type: 'FeatureCollection',
+    features: features
+  }, {
+    style: styleDisturbance,
+    onEachFeature: addDisturbancePopup
+  }).addTo(map);
+});
 
-});
-const ManouaneLayer = L.geoJSON(ManouanePolyData, {
-  style: {
-    color: '#FF6347',
-    fillColor: '#FF6347',
-    weight: 2,
-    fillOpacity: 0.35
-  },
+const allDisturbances = L.layerGroup(
+  Object.values(classLayers)
+).addTo(map);
 
-});
-const PipmuacanLayer = L.geoJSON(PipmuacanPolyData, {
-  style: {
-    color: '#32CD32',
-    fillColor: '#32CD32',
-    weight: 2,
-    fillOpacity: 0.35
-  },
-
-});
-const ValdOrLayer = L.geoJSON(ValdOrPolyData, {
-  style: {
-    color: '#FFD700',
-    fillColor: '#FFD700',
-    weight: 2,
-    fillOpacity: 0.35
-  },
-});
-const QuebecLayer = L.geoJSON(QubecPolyData, {
-  style: {
-    color: '#0000FF',
-    fillColor: '#0000FF',
-    weight: 2,
-    fillOpacity: 0.35
-  },
-});
-const QuebecWithoutCutblocksLayer = L.geoJSON(QuebecWithoutCutblocksData, {
-  style: {
-    color: '#9f1f7f',
-    fillColor: '#9f1f7f',
-    weight: 2,
-    fillOpacity: 0.35
-  },
-}).addTo(map);
-const allDisturbances = L.featureGroup([
-  PolyLayer,
-  ManicouaganLayer,
-  ManouaneLayer,
-  PipmuacanLayer,
-  ValdOrLayer,
-  QuebecLayer,
-  QuebecWithoutCutblocksLayer
-]).addTo(map);
-  L.control.layers(null, {
+L.control.layers({
+  'Caribou Populations': L.layerGroup([
+    forestierLayer,
+    gaspesieLayer
+  ])
+}, {
   'Anthropogenic disturbances': allDisturbances
 }, {
   collapsed: false
 }).addTo(map);
 
-  map.fitBounds(allDisturbances.getBounds());
-
-})
-.catch(function (err) {
-  console.error("GeoJSON loading failed:", err);
+const disturbanceLegend = L.control({
+  position: 'bottomright'
 });
 
+disturbanceLegend.onAdd = function () {
+  const div = L.DomUtil.create('div', 'legend');
 
+  div.style.background = 'white';
+  div.style.padding = '8px 10px';
+  div.style.lineHeight = '1.5';
+  div.style.borderRadius = '4px';
+
+  div.innerHTML = '<strong>Disturbance class</strong><br>';
+
+  Object.entries(classLayers).forEach(function ([className, layer]) {
+    const label = document.createElement('label');
+    label.style.display = 'block';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = true;
+
+    const swatch = document.createElement('span');
+    swatch.style.display = 'inline-block';
+    swatch.style.width = '12px';
+    swatch.style.height = '12px';
+    swatch.style.margin = '0 6px';
+    swatch.style.background =
+      disturbanceColours[className];
+
+    checkbox.addEventListener('change', function () {
+      if (checkbox.checked) {
+        layer.addTo(map);
+      } else {
+        map.removeLayer(layer);
+      }
+    });
+
+    label.appendChild(checkbox);
+    label.appendChild(swatch);
+    label.appendChild(document.createTextNode(className));
+    div.appendChild(label);
+  });
+
+  L.DomEvent.disableClickPropagation(div);
+  return div;
+};
+
+disturbanceLegend.addTo(map);
+
+map.fitBounds(allDisturbances.getBounds());
+  
+}).catch(function (err) {
+  console.error("GeoJSON loading failed:", err);
+})
