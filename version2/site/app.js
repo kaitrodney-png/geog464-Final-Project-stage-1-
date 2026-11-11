@@ -65,7 +65,7 @@ Promise.all([
   fetch('../Data/Take2/ValdOr2020_Disturb_Perturb_Poly.geojson').then(response  => response.json()),
   fetch('../Data/Take2/Quebec_HU_Cutblocks.geojson').then(response  => response.json()), 
   fetch('../Data/Take2/Quebec_Without_Cutblocks.geojson').then(response  => response.json()),
-  fetch('../Data/Take2/Caribou_Fire_Web.geojson').then(response  => response.json())
+  fetch('../Data/Cleaned/Caribou_Fire_Web.geojson').then(response  => response.json())
 
     // PART 8: change the file name to your own
 ])
@@ -92,6 +92,7 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
   }).addTo(map);
 
   const FireLayer = L.geoJSON(FireData, {
+    
     style: {
       color: '#e82214',
       fillColor: '#e82214',
