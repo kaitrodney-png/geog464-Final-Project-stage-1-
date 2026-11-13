@@ -15,6 +15,13 @@ It has depth because it brings in a new layer of complexity to the view.
 I will know it works when both can be naivated easily.
 My edge case is ...
 
+## Part 3: what I found, and one fix
+Evidence: The tester struggled to figure out what fell within the border of what populations as they all overlap. This made identifying the key problem within each population a little harder. 
+Severity: 2
+My change: I will add like a filter setting kind of so that way you can pick one population at a time and observe it while the others kind of disapear. 
+Recheck: [the same task, given to someone new, with no help.
+ Fixed means: they do it without hesitating at that spot]
+
 
 ## AI DISCOURSE:
 
