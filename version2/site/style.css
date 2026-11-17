@@ -12,17 +12,18 @@ body {
 }
 .page {
     
-  display: grid;
-  grid-template-columns: minmax(280px, 1fr) 2fr;   /* story, then a wider map */
+  display: block;  /* shows the map as one big map that takes up the whole page */
+  width: 100%;  
   gap: 24px;
-  max-width: 1300px;
+  max-width: none;
   margin: 0 auto;
-  padding: 16px;
-  .page {
-@media (max-width: 800px) {
-  .page { grid-template-columns: 1fr; }   /* one column on a phone */
-}
-}
+  padding: 16px 24px;
+  box-sizing: border-box;
+  .page 
+  .story { /* this is the test that i have in the story 8*/
+    max-width: 1200px;
+    margin: 0 auto 16px;}
+
 h1, h2 { color: var(--accent); line-height: 1.2; }
 h1 { font-size: 30px; margin-top: 0; }
 h2 { font-size: 20px; margin-top: 28px; }
@@ -30,18 +31,36 @@ h2 { font-size: 20px; margin-top: 28px; }
 #status { color: var(--muted); font-size: 15px; }
 a { color: var(--accent); }
 #map {
-  height: 750px;   /* the map needs a height, or it is invisible */
+  width: 100%;  
+  height: calc(100vh - 230px);
   min-height: 420px;
-  position: sticky;
-  top: 16px;
+  position: relative;
   border-radius: 8px;
 }
-@media (max-width: 800px) {
-  .page { grid-template-columns: 1fr; }   /* one column on a phone: story, then map */
-  #map { height: 70vh; position: static; }
+@media (max-width: 800px) { /* for phones and small tablets a media query */
+  .page { 
+    padding: 12px; }   
+  nav {
+    gap: 15px;
+  }
+  #map { 
+    height: 70vh;
+    min-height: 400px;
+   }
 }
-.legend { background: #fff; padding: 6px 10px; border-radius: 6px; line-height: 1.6; font-size: 14px; }
-.legend span { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }}
+.legend {  /* controls the appearance of the legend */
+  background: #fff; 
+  padding: 6px 10px; 
+  border-radius: 6px; 
+  line-height: 1.6; 
+  font-size: 14px; }
+
+.legend span { /* controls the appearance of the legend symbols */
+  display: inline-block; 
+  width: 10px; 
+  height: 10px; 
+  border-radius: 50%; 
+  margin-right: 6px; }}
 
 
 /* WEBSITE NAVIGATION */
@@ -51,11 +70,12 @@ header {
     padding: 18px 30px;
 }
 
-nav {
+nav { 
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 35px;
+    /* controls how the navigation pannel will look */
 }
 
 nav a {
@@ -63,8 +83,10 @@ nav a {
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
+    /* a is kind of like a reference to hyperlinks so it refers to my other 3 pages */
 }
 
 nav a:hover {
     color: #B9D6A3;
+    /*changes the colour when it goes over it */
 }
