@@ -29,9 +29,9 @@ I will know it works when both can be naivated easily.
 My edge case is ...
 
 ## Part 3: what I found, and one fix
-Evidence: The tester struggled to figure out what fell within the border of what populations as they all overlap. This made identifying the key problem within each population a little harder. 
+Evidence: The tester found all the information on the main page distracting and stuggled to navigate to what was actually needed to navigate rather then what was just extra information. 
 Severity: 2
-My change: I will add like a filter setting kind of so that way you can pick one population at a time and observe it while the others kind of disapear. 
+My change: I will add pages that takes the main information off of the fist page and then puts it on the other pages to reduce the clutter as well as clean up some of the formating and kind of grammar. 
 Recheck: [the same task, given to someone new, with no help.
  Fixed means: they do it without hesitating at that spot]
 
@@ -111,8 +111,6 @@ After I approve it, I will test: [specific observable test].
 
 
 Things to do .
-- convert the data and turn it into Geojsons
-- get ride of toggle between the species (make them always present on the map)
 - highlight the boundaries of the ones with extra information 
 - do a legend 
 - Add a toggle for polygon disturbances.
