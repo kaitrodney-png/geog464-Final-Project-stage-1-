@@ -38,7 +38,7 @@ body {
 
     padding: 20px;
     box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.94); /* NEW: slightly transparent white */
+    background: rgba(255, 255, 255, 0.75); /* NEW: slightly transparent white */
     border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2); 
   }
@@ -87,6 +87,9 @@ a { color: var(--accent); }
 header {
     background-color: #263D32;
     padding: 18px 30px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav { 
