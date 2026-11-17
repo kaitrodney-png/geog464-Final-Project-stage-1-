@@ -10,6 +10,9 @@ body {
   line-height: 1.5;
   color: var(--text);
 }
+
+/* main page layout and styling */
+
 .page {
     
   display: block;  /* shows the map as one big map that takes up the whole page */
@@ -19,10 +22,26 @@ body {
   margin: 0 auto;
   padding: 16px 24px;
   box-sizing: border-box;
-  .page 
-  .story { /* this is the test that i have in the story 8*/
+}
+
+.story { /* this is the test that i have in the story 8*/
     max-width: 1200px;
-    margin: 0 auto 16px;}
+    margin: 0 auto 16px;
+    position: absolute;
+    top: 60px; 
+    left: 24px;
+    z-index: 1000;    /*THIS ALLOWS THE TEXT TO BE ON TOP OF THE MAP */
+    width: 350px;        /* NEW: controls panel width */
+    max-width: calc(100% - 48px);
+    max-height: calc(100% - 48px); /* NEW: prevents panel exceeding map height */
+    overflow-y: auto;    /* NEW: allows scrolling if story is too long */
+
+    padding: 20px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.94); /* NEW: slightly transparent white */
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2); 
+  }
 
 h1, h2 { color: var(--accent); line-height: 1.2; }
 h1 { font-size: 30px; margin-top: 0; }
@@ -32,7 +51,7 @@ h2 { font-size: 20px; margin-top: 28px; }
 a { color: var(--accent); }
 #map {
   width: 100%;  
-  height: calc(100vh - 230px);
+  height: calc(100vh - 60px);
   min-height: 420px;
   position: relative;
   border-radius: 8px;
@@ -44,7 +63,7 @@ a { color: var(--accent); }
     gap: 15px;
   }
   #map { 
-    height: 70vh;
+    height: 100%;
     min-height: 400px;
    }
 }
@@ -60,7 +79,7 @@ a { color: var(--accent); }
   width: 10px; 
   height: 10px; 
   border-radius: 50%; 
-  margin-right: 6px; }}
+  margin-right: 6px; }
 
 
 /* WEBSITE NAVIGATION */
