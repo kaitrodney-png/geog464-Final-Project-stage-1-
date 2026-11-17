@@ -51,8 +51,7 @@ function addCaribouPopup(feature, layer) {
     'French name: ' + p.name_fr + '<br>' +
     'Scientific name: ' + p.name_sci + '<br>' +
     'Status: ' + p.status + '<br>' +
-    'Stability level: ' + p.Level_Of_Stability + '<br>' +
-    'Area: ' + p.area_km2 + ' km²<br>'
+    'Stability level: ' + p.Level_Of_Stability + '<br>' 
   );
 } 
 Promise.all([

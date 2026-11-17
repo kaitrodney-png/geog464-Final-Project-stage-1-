@@ -9,6 +9,19 @@ Link: https://kaitrodney-png.github.io/geog464-Final-Project-stage-1-/version2/s
     **Boundary:** Will not identify areas to implment new measures or wildlife control ony indentify areas of interst 
     **Data:** Disturbance data and wildlife habits of different Caribou species in Quebec
 
+## Pre-flight report (Lab 7)
+| Check | Result | What I did |
+| --- | --- | --- |
+| 1. Cold start: There is a red line that shows the fire layer could not be loaded. this is a known problem still trying to fix 
+| 2. Read every label: None 
+| 3. Ask twice | ... | ... |
+| 4. The edge | ... | ... |
+| 5. The data does not come | ... | ... |
+| 6. On a phone (size view and my phone) | ... | ... |
+| 7. Mouse in my pocket | ... | ... |
+| 8. Accessibility audit | ... | ... | 
+
+
  ## A3 feature: Navigating the buffer and Natural disturbances 
 For A3 I will add natural disturbances and the buffer to my map so that my reader can understand the greater extend of disturbances.
 It has depth because it brings in a new layer of complexity to the view. 
