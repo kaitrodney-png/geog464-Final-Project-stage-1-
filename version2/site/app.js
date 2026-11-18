@@ -116,7 +116,24 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
     onEachFeature: addCaribouPopup
   }).addTo(map);
 
+ /* creates the information that goes in the drop down, the boolean is what actually sorts through and takes out bad data if it stil is present */ 
+const populationSelect = document.getElementById('populationSelect');
+const populationNames = [...new Set(
+  populationFeatureLayers
+    .map(function (layer) {
+      return layer.feature.properties.Local_Pop_Name;
+    })
+    .filter(Boolean)
+)].sort();
+/* adds the actual names onto the drop down menu */
+populationNames.forEach(function (name) {
+  const option = document.createElement('option');
 
+  option.value = name;
+  option.textContent = name;
+
+  populationSelect.appendChild(option);
+});
 
 const disturbanceData = [
   PolyData,
@@ -229,7 +246,7 @@ overviewControl.onAdd = function () {
 
   L.DomEvent.disableClickPropagation(container);
 
- // EVENT: When wanting to return to the overview, listen for a click on the button
+ // EVENT: When wanting to return listen for a click on the button
   L.DomEvent.on(overviewButton, 'click', function () {
 
     // this restores all population boundaries
