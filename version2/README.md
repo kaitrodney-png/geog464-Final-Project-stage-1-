@@ -17,8 +17,10 @@ My edge case is ________.
 
 Test 1. I click a population to see more information about it.
   Expected: A zoom in of the population with the options for more detailed information.
+  Result: it zoomed in to the population I chose, but there was no way out 
 Test 2. I use the filter to pick a population to get more information.
   Expected: It brings you to the zoom of the population to get more information. 
+  result: 
 Test 3. I click a random place on the map or type in a name that does not exist.
   Expected: A message telling the reader that this is an invalid option. 
 

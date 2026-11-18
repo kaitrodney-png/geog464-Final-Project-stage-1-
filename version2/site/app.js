@@ -110,17 +110,6 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
 
 
 
-// Load fire data independently
-let FireLayer = null;
-
-fetch('../Data/Cleaned/Caribou_Fire_Web.geojson')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Fire file could not be loaded: ' + response.status);
-    }
-    return response.json();
-  })  
-
 const disturbanceData = [
   PolyData,
   ManicouaganPolyData,
@@ -213,6 +202,52 @@ disturbanceLegend.onAdd = function () {
 };
 
 disturbanceLegend.addTo(map);
+
+// NEW: Create the Return to Québec Overview button
+const overviewControl = L.control({
+  position: 'topleft'
+});
+
+overviewControl.onAdd = function () {
+
+  const container = L.DomUtil.create('div', 'leaflet-bar');
+
+  const button = L.DomUtil.create('button', 'overview-button', container);
+
+  button.type = 'button';
+  button.textContent = 'Return to Québec Overview';
+
+  L.DomEvent.disableClickPropagation(container);
+ // EVENT: listen for a click on the button
+  L.DomEvent.on(button, 'click', function () {
+
+    // this restores all population boundaries
+    populationFeatureLayers.forEach(function (populationLayer) {
+      populationLayer.addTo(map);
+    });
+
+    // This will close any open popup
+    map.closePopup();
+
+    // UPDATE 3: calculate the full provincial extent
+    const provinceBounds = L.featureGroup([
+      forestierLayer,
+      gaspesieLayer
+    ]).getBounds();
+
+    // Then will zoom back out to the provincial overview
+    map.fitBounds(provinceBounds, {
+      padding: [30, 30]
+    });
+
+  });
+
+  return container;
+};
+
+// Add the button to the map
+overviewControl.addTo(map);
+
 
 map.fitBounds(forestierLayer.getBounds());
   
