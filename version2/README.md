@@ -9,6 +9,22 @@ Link: https://kaitrodney-png.github.io/geog464-Final-Project-stage-1-/version2/s
     **Boundary:** Will not identify areas to implment new measures or wildlife control ony indentify areas of interst 
     **Data:** Disturbance data and wildlife habits of different Caribou species in Quebec
 
+## A3 feature: Navigating the buffer and Natural disturbances 
+For A3 I will add the individual selection of populations that then show the natural disturbances and the buffer to my map so that my reader can understand the greater extend of disturbances.
+It has depth because it brings in a new layer of complexity to the view. 
+I will know it works when both can be naivated easily.
+My edge case is ________. 
+
+Test 1. I click a population to see more information about it.
+  Expected: A zoom in of the population with the options for more detailed information.
+Test 2. I use the filter to pick a population to get more information.
+  Expected: It brings you to the zoom of the population to get more information. 
+Test 3. I click a random place on the map or type in a name that does not exist.
+  Expected: A message telling the reader that this is an invalid option. 
+
+Curently my actually feature is not working and I need to fix it as it doenst load anymore. But the actually feature happens in the app.js file where the data sets get called in and placed on the map. Then further down in my toggle, being able to turn the toggle on and off for both the natural distubances and the buffer ( that I currently removed as it was to big) so here:
+
+
 ## Pre-flight report (Lab 7)
 | Check | Result | What I did |
 | --- | --- | --- |
@@ -128,16 +144,11 @@ Before editing:
 After I approve it, I will test: [specific observable test].
 
 
-Things to do .
-- highlight the boundaries of the ones with extra information 
-- do a legend 
-- Add a toggle for polygon disturbances.
-- Add a toggle for linear disturbances.
-- Add a toggle for anthropogenic disturbances with the 500 m buffer.
--  Add a toggle for anthropogenic disturbances with the 500 m buffer and fire.
--  Make sure the disturbance layers are visually distinguishable from the population boundaries.
-- Clean up popups with relevant population information.
-- Explain what each disturbance layer represents.
+Explain this function line by line for a beginner. Then tell me:
+what does it return when the list is empty, and when it has two items?
+Do not change the code.
+[paste the function]
+
 
 Git code to save it:
 #git status

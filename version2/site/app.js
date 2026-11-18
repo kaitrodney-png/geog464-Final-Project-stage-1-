@@ -48,12 +48,21 @@ function addCaribouPopup(feature, layer) {
     '<h3>Caribou Population</h3>' +
     '<strong>' + p.Local_Pop_Name + '</strong><br>' +
     'English name: ' + p.name_en + '<br>' +
-    'French name: ' + p.name_fr + '<br>' +
     'Scientific name: ' + p.name_sci + '<br>' +
     'Status: ' + p.status + '<br>' +
     'Stability level: ' + p.Level_Of_Stability + '<br>' 
   );
-} 
+  /* The feature where they can zoom in on an individual population when they click it */
+  layer.on('click', function () {
+
+    // HANDLER / UPDATE: zoom the map to the selected population
+    map.fitBounds(layer.getBounds(), {
+      padding: [30, 30]
+    });
+
+  });
+}
+
 Promise.all([
   fetch('../Data/Cleaned/Caribou_Simplified.geojson').then(response  => response.json()),
   fetch('../Data/Cleaned/Caribou_Gaspesie_Simplified.geojson').then(response  => response.json()),
@@ -88,8 +97,7 @@ const gaspesieLayer = L.geoJSON(gaspesieData, {
     onEachFeature: addCaribouPopup
   }).addTo(map);
 
- // Placeholder for the fire layer
-const FirePlaceholder = L.layerGroup().addTo(map);
+
 
 // Load fire data independently
 let FireLayer = null;
@@ -100,27 +108,7 @@ fetch('../Data/Cleaned/Caribou_Fire_Web.geojson')
       throw new Error('Fire file could not be loaded: ' + response.status);
     }
     return response.json();
-  })
-  .then(FireData => {
-
-    FireLayer = L.geoJSON(FireData, {
-      style: {
-        color: '#e82214',
-        fillColor: '#e82214',
-        weight: 2,
-        fillOpacity: 0.35
-      }
-    });
-
-    if (map.hasLayer(FirePlaceholder)) {
-      FirePlaceholder.addLayer(FireLayer);
-    }
-
-    console.log('Fire layer loaded successfully!');
-  })
-  .catch(err => {
-    console.error('Fire layer failed to load:', err);
-  });
+  })  
 
 const disturbanceData = [
   PolyData,
@@ -160,8 +148,7 @@ L.control.layers({
     gaspesieLayer
   ])
 }, {
-  'Anthropogenic disturbances': allDisturbances,
-    'Natural disturbances': FirePlaceholder
+  'Anthropogenic disturbances': allDisturbances
 }, {
   collapsed: false
 }).addTo(map);
