@@ -43,6 +43,8 @@ function addDisturbancePopup(feature, layer) {
 
 // Keeps track of all individual caribou population boundaries
 const populationFeatureLayers = []; 
+// Keeps track of the Return to Québec Overview button
+let overviewButton;
 
 
 function addCaribouPopup(feature, layer) {
@@ -67,7 +69,13 @@ function addCaribouPopup(feature, layer) {
         map.removeLayer(populationLayer);
       }
     });
-     map.fitBounds(layer.getBounds(), {
+/*. hides the little text box when you go to the population zoom */
+    document.querySelector('.story').style.display = 'none';  
+    
+   /* turns on the return button */
+    overviewButton.style.display = 'block'; 
+  
+    map.fitBounds(layer.getBounds(), {
       padding: [30, 30]
     });
 
@@ -212,24 +220,33 @@ overviewControl.onAdd = function () {
 
   const container = L.DomUtil.create('div', 'leaflet-bar');
 
-  const button = L.DomUtil.create('button', 'overview-button', container);
+ overviewButton = L.DomUtil.create('button', 'overview-button', container); 
+ overviewButton.style.display = 'none'; 
 
-  button.type = 'button';
-  button.textContent = 'Return to Québec Overview';
+
+  overviewButton.type = 'button';
+  overviewButton.textContent = 'Return to Québec Overview';
 
   L.DomEvent.disableClickPropagation(container);
- // EVENT: listen for a click on the button
-  L.DomEvent.on(button, 'click', function () {
+
+ // EVENT: When wanting to return to the overview, listen for a click on the button
+  L.DomEvent.on(overviewButton, 'click', function () {
 
     // this restores all population boundaries
     populationFeatureLayers.forEach(function (populationLayer) {
       populationLayer.addTo(map);
     });
 
+    /* hides the return button when you go back */ 
+    overviewButton.style.display = 'none'; 
+
     // This will close any open popup
     map.closePopup();
 
-    // UPDATE 3: calculate the full provincial extent
+    // Bring back the story text box and key information about map 
+    document.querySelector('.story').style.display = 'block';
+
+    // Then calculate the full provincial extent
     const provinceBounds = L.featureGroup([
       forestierLayer,
       gaspesieLayer
