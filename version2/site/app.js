@@ -41,6 +41,10 @@ function addDisturbancePopup(feature, layer) {
   );
 }
 
+// Keeps track of all individual caribou population boundaries
+const populationFeatureLayers = []; 
+
+
 function addCaribouPopup(feature, layer) {
   const p = feature.properties;
 
@@ -52,11 +56,18 @@ function addCaribouPopup(feature, layer) {
     'Status: ' + p.status + '<br>' +
     'Stability level: ' + p.Level_Of_Stability + '<br>' 
   );
+
+   populationFeatureLayers.push(layer); 
+
   /* The feature where they can zoom in on an individual population when they click it */
   layer.on('click', function () {
 
-    // HANDLER / UPDATE: zoom the map to the selected population
-    map.fitBounds(layer.getBounds(), {
+    populationFeatureLayers.forEach(function (populationLayer) {
+      if (populationLayer !== layer) {
+        map.removeLayer(populationLayer);
+      }
+    });
+     map.fitBounds(layer.getBounds(), {
       padding: [30, 30]
     });
 
