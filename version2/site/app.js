@@ -89,7 +89,21 @@ function selectPopulation(selectedLayer) {
   map.fitBounds(selectedLayer.getBounds(), {
     padding: [30, 30]
   });
+// Get the information for the selected population
+const p = selectedLayer.feature.properties;
 
+// Display the population name as the panel heading
+document.getElementById('populationInfoName').textContent =
+  p.Local_Pop_Name;
+
+// Display the remaining population information
+document.getElementById('populationInfoDetails').innerHTML =
+  '<p><strong>English name:</strong> ' + (p.name_en || 'Not available') + '</p>' +
+  '<p><strong>Scientific name:</strong> ' + (p.name_sci || 'Not available') + '</p>' +
+  '<p><strong>Status:</strong> ' + (p.status || 'Not available') + '</p>' +
+  '<p><strong>Stability level:</strong> ' + (p.Level_Of_Stability || 'Not available') + '</p>';
+// Make the information panel visible
+document.getElementById('populationInfo').style.display = 'block'; 
 }
 
 
