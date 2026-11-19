@@ -53,7 +53,7 @@ function addCaribouPopup(feature, layer) {
 
   // Popup shown when clicking a population on the overview
   layer.bindPopup(
-    '<strong>' + p.Local_Pop_Name + '</strong><br>' +
+    '<strong class="population-popup-title">' + p.Local_Pop_Name + '</strong><br>' +
    '<button class="explore-population">Explore this population</button>'
   );
 
