@@ -188,3 +188,8 @@ to go back to the last version that worked
 - find the population size information 
 - a scale of least to most vulnerable 
 - a percentance of how much of their habitat is affected and what the main causes are 
+
+
+
+Seperate the map and story so overlap the map for the phone so they go on top of each other when on phine but 
+remove the absalout when it is on the phone and then remove the width to look good on phone for info individual box 
