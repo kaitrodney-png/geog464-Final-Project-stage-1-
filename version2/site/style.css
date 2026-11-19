@@ -29,7 +29,7 @@ body {
     margin: 0 auto 16px;
     position: absolute;
     top: 60px; 
-    left: 24px;
+    left: 30px;
     z-index: 1000;    /*THIS ALLOWS THE TEXT TO BE ON TOP OF THE MAP */
     width: 350px;        /* NEW: controls panel width */
     max-width: calc(100% - 48px);
@@ -40,7 +40,7 @@ body {
     box-sizing: border-box;
     background: rgba(255, 255, 255, 0.75); /* NEW: slightly transparent white */
     border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2); 
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.45); 
   }
 
 h1, h2 { color: var(--accent); line-height: 1.2; }
@@ -166,7 +166,7 @@ nav a:hover {
   display: none;
   position: absolute;
   bottom: 20px;
-  left: 20px;
+  left: 30px;
   z-index: 1000;
 
   width: 280px;
@@ -175,7 +175,7 @@ nav a:hover {
 
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
 
   color: var(--text);
 }
