@@ -51,8 +51,8 @@ h2 { font-size: 20px; margin-top: 28px; }
 a { color: var(--accent); }
 #map {
   width: 100%;  
-  height: calc(100vh - 60px);
-  min-height: 420px;
+  height: calc(100vh - 92px);
+  min-height: 0;
   position: relative;
   border-radius: 8px;
 }
