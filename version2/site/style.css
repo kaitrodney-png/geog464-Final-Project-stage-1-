@@ -57,6 +57,7 @@ a { color: var(--accent); }
   border-radius: 8px;
 }
 @media (max-width: 800px) { /* for phones and small tablets a media query */
+  body (background-color: yellow);
   .page { 
     padding: 12px; }   
   nav {
