@@ -161,3 +161,30 @@ Git code to save it:
 
 to go back to the last version that worked 
 #git restore site/app.js 
+
+Things I need to do 
+- Remove the old floating Leaflet pop-ups once on individual view 
+- Hide the information panel when returning to the overview
+- Polish the information panel layout
+- Add protected areas
+- Make sure the disturbance layer controls work correctly
+- Load the 500m buffer only within the individiul view 
+- Load fire disturbances only within the individual view 
+- Load linear disturbances only within the individual view 
+- Make sure they all turn on and off 
+- Clean up the styling and like page in general 
+- Review the Conservation Actions page
+- review the Sources page
+- put a reset button on first page?
+- key info on first page 
+- explain the disturbance classes 
+- fix it on the phone cause shit is bad 
+- cuter return button
+- Test navigation and map functionality
+- find new work for popultion because that shit be confusing 
+- do something about Gaspesie as no inforamtion there 
+
+Things I wish to do 
+- find the population size information 
+- a scale of least to most vulnerable 
+- a percentance of how much of their habitat is affected and what the main causes are 
