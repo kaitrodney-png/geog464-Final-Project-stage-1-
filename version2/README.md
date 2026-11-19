@@ -23,6 +23,7 @@ Test 2. I use the filter to pick a population to get more information.
   result: 
 Test 3. I click a random place on the map or type in a name that does not exist.
   Expected: A message telling the reader that this is an invalid option. 
+  Result: It actually does nothing
 
 Curently my actually feature is not working and I need to fix it as it doenst load anymore. But the actually feature happens in the app.js file where the data sets get called in and placed on the map. Then further down in my toggle, being able to turn the toggle on and off for both the natural distubances and the buffer ( that I currently removed as it was to big) so here:
 

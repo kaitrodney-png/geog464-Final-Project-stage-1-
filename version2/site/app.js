@@ -47,6 +47,7 @@ const populationFeatureLayers = [];
 let overviewButton;
 
 
+
 function addCaribouPopup(feature, layer) {
   const p = feature.properties;
 
@@ -56,31 +57,41 @@ function addCaribouPopup(feature, layer) {
     'English name: ' + p.name_en + '<br>' +
     'Scientific name: ' + p.name_sci + '<br>' +
     'Status: ' + p.status + '<br>' +
-    'Stability level: ' + p.Level_Of_Stability + '<br>' 
+    'Stability level: ' + p.Level_Of_Stability + '<br>'
   );
 
-   populationFeatureLayers.push(layer); 
+  // Keep track of each individual population boundary
+  populationFeatureLayers.push(layer);
 
-  /* The feature where they can zoom in on an individual population when they click it */
+  // When a boundary is clicked, select that population
   layer.on('click', function () {
-
-    populationFeatureLayers.forEach(function (populationLayer) {
-      if (populationLayer !== layer) {
-        map.removeLayer(populationLayer);
-      }
-    });
-/*. hides the little text box when you go to the population zoom */
-    document.querySelector('.story').style.display = 'none';  
-    
-   /* turns on the return button */
-    overviewButton.style.display = 'block'; 
-  
-    map.fitBounds(layer.getBounds(), {
-      padding: [30, 30]
-    });
-
+    selectPopulation(layer);
   });
 }
+
+// Shared function for selecting a population
+function selectPopulation(selectedLayer) {
+
+  // Hide every population except the selected one
+  populationFeatureLayers.forEach(function (populationLayer) {
+    if (populationLayer !== selectedLayer) {
+      map.removeLayer(populationLayer);
+    }
+  });
+
+  // Hide the introductory information
+  document.querySelector('.story').style.display = 'none';
+
+  // Show the Return to Québec Overview button
+  overviewButton.style.display = 'block';
+
+  // Zoom to the selected population
+  map.fitBounds(selectedLayer.getBounds(), {
+    padding: [30, 30]
+  });
+
+}
+
 
 Promise.all([
   fetch('../Data/Cleaned/Caribou_Simplified.geojson').then(response  => response.json()),
@@ -134,6 +145,24 @@ populationNames.forEach(function (name) {
 
   populationSelect.appendChild(option);
 });
+
+// When someone selects a population from the dropdown
+populationSelect.addEventListener('change', function () {
+
+  // Get the name selected in the dropdown
+  const selectedName = populationSelect.value;
+
+  // Find the matching population boundary
+  const selectedLayer = populationFeatureLayers.find(function (layer) {
+    return layer.feature.properties.Local_Pop_Name === selectedName;
+  });
+
+  // Use the same function as clicking a boundary on the map
+  if (selectedLayer) {
+    selectPopulation(selectedLayer);
+  }
+
+}); 
 
 const disturbanceData = [
   PolyData,
