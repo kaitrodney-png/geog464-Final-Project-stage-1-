@@ -162,9 +162,7 @@ Git code to save it:
 to go back to the last version that worked 
 #git restore site/app.js 
 
-Things I need to do 
-- Remove the old floating Leaflet pop-ups once on individual view 
-- Hide the information panel when returning to the overview
+# Things I need to do 
 - Polish the information panel layout
 - Add protected areas
 - Make sure the disturbance layer controls work correctly
@@ -183,8 +181,10 @@ Things I need to do
 - Test navigation and map functionality
 - find new work for popultion because that shit be confusing 
 - do something about Gaspesie as no inforamtion there 
+- move the zoom in and zoom out buttons, as well as add maybe a recenter option
 
-Things I wish to do 
+
+# Things I wish to do 
 - find the population size information 
 - a scale of least to most vulnerable 
 - a percentance of how much of their habitat is affected and what the main causes are 
