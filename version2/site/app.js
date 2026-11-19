@@ -51,21 +51,24 @@ let overviewButton;
 function addCaribouPopup(feature, layer) {
   const p = feature.properties;
 
+  // Popup shown when clicking a population on the overview
   layer.bindPopup(
-    '<h3>Caribou Population</h3>' +
     '<strong>' + p.Local_Pop_Name + '</strong><br>' +
-    'English name: ' + p.name_en + '<br>' +
-    'Scientific name: ' + p.name_sci + '<br>' +
-    'Status: ' + p.status + '<br>' +
-    'Stability level: ' + p.Level_Of_Stability + '<br>'
+   '<button class="explore-population">Explore this population</button>'
   );
 
   // Keep track of each individual population boundary
   populationFeatureLayers.push(layer);
 
-  // When a boundary is clicked, select that population
-  layer.on('click', function () {
-    selectPopulation(layer);
+  // When the popup opens, activate its Explore button
+  layer.on('popupopen', function (event) {
+    const button = event.popup.getElement()
+      .querySelector('.explore-population');
+
+    button.addEventListener('click', function () {
+      map.closePopup();
+      selectPopulation(layer);
+    });
   });
 }
 
@@ -78,6 +81,8 @@ function selectPopulation(selectedLayer) {
       map.removeLayer(populationLayer);
     }
   });
+  // Disable the population popup in individual view
+selectedLayer.unbindPopup();
 
   // Hide the introductory information
   document.querySelector('.story').style.display = 'none';
@@ -291,45 +296,63 @@ overviewControl.onAdd = function () {
 
   L.DomEvent.disableClickPropagation(container);
 
- // EVENT: When wanting to return listen for a click on the button
+
+  
+    // EVENT: When wanting to return, listen for a click on the button
   L.DomEvent.on(overviewButton, 'click', function () {
 
-    // this restores all population boundaries
-    populationFeatureLayers.forEach(function (populationLayer) {
-      populationLayer.addTo(map);
-    });
+  // Restore all population boundaries and their overview popups
+  populationFeatureLayers.forEach(function (populationLayer) {
 
-    /* hides the return button when you go back */ 
-    overviewButton.style.display = 'none'; 
+    // Restore the population boundary
+    populationLayer.addTo(map);
 
-    // This will close any open popup
-    map.closePopup();
+    // Get the population information
+    const p = populationLayer.feature.properties;
 
-    // Bring back the story text box and key information about map 
-    document.querySelector('.story').style.display = 'block';
-
-    // Then calculate the full provincial extent
-    const provinceBounds = L.featureGroup([
-      forestierLayer,
-      gaspesieLayer
-    ]).getBounds();
-
-    // Then will zoom back out to the provincial overview
-    map.fitBounds(provinceBounds, {
-      padding: [30, 30]
-    });
+    // Restore the overview popup
+    populationLayer.bindPopup(
+      '<strong>' + p.Local_Pop_Name + '</strong><br>' +
+      '<button class="explore-population">Explore this population</button>'
+    );
 
   });
 
+  // Hide the Return button
+  overviewButton.style.display = 'none';
+
+  // Close any open popup
+  map.closePopup();
+
+  // Bring back the introductory story
+  document.querySelector('.story').style.display = 'block';
+
+  // Hide the individual population information panel
+  document.getElementById('populationInfo').style.display = 'none';
+
+  // Calculate the full provincial extent
+  const provinceBounds = L.featureGroup([
+    forestierLayer,
+    gaspesieLayer
+  ]).getBounds();
+
+  // Zoom back out to the provincial overview
+  map.fitBounds(provinceBounds, {
+    padding: [30, 30]
+  });
+
+});
+
+  // Return the button container to Leaflet
   return container;
 };
 
 // Add the button to the map
 overviewControl.addTo(map);
 
-
+// Set the initial map view
 map.fitBounds(forestierLayer.getBounds());
-  
+
 }).catch(function (err) {
   console.error("GeoJSON loading failed:", err);
-})
+});
