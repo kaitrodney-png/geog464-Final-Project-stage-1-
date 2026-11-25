@@ -182,6 +182,7 @@ to go back to the last version that worked
 - find new work for popultion because that shit be confusing 
 - do something about Gaspesie as no inforamtion there 
 - move the zoom in and zoom out buttons, as well as add maybe a recenter option
+- add memory feature ---> adding Caribou sightings 
 
 
 # Things I wish to do 
