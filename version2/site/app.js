@@ -72,6 +72,9 @@ function addCaribouPopup(feature, layer) {
   });
 }
 
+// Empty layer for population-specific fire disturbances
+let fireLayer = L.geoJSON(null); 
+
 // Shared function for selecting a population
 function selectPopulation(selectedLayer) {
 
@@ -96,6 +99,22 @@ selectedLayer.unbindPopup();
   });
 // Get the information for the selected population
 const p = selectedLayer.feature.properties;
+
+// Get the selected population's name
+const populationName = p.Local_Pop_Name;
+
+// Build the path to its fire GeoJSON file
+const fireFile = "../Data/Fire_by_POP/" + populationName + "_Fire.geojson";
+
+// Fetch the selected population's fire GeoJSON
+fetch(fireFile)
+  .then(response => response.json())
+  .then(data => {
+    console.log("Fire data for " + populationName + ":", data);
+  })
+  .catch(error => {
+    console.error("Error loading fire data:", error);
+  });
 
 // Display the population name as the panel heading
 document.getElementById('populationInfoName').textContent =
@@ -217,13 +236,14 @@ const allDisturbances = L.layerGroup(
   Object.values(classLayers)
 ).addTo(map);
 
+
 L.control.layers({
   'Caribou Populations': L.layerGroup([
     forestierLayer,
     gaspesieLayer
   ])
 }, {
-  'Anthropogenic disturbances': allDisturbances
+  'Anthropogenic disturbances': allDisturbances,
 }, {
   collapsed: false
 }).addTo(map);
@@ -356,3 +376,14 @@ map.fitBounds(forestierLayer.getBounds());
 }).catch(function (err) {
   console.error("GeoJSON loading failed:", err);
 });
+
+fetch("../Data/Fire_by_POP/Charlevoix_Fire.geojson")
+  .then(response => response.json())
+  .then(data => {
+    fireLayer.clearLayers();
+    fireLayer.addData(data);
+    fireLayer.addTo(map);
+  })
+  .catch(error => {
+    console.error("Error loading fire data:", error);
+  }); 
