@@ -14,7 +14,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // PART 6: how many pipes to draw. Start small, then try them all.
 const LIMIT = Infinity;  // change to 1000, 10000, or Infinity
 const disturbanceColours = {
-  Cutblock: '#be621b',
+  Cutblock: '#2c4ba0',
   Settlement: '#7570b3',
   Mine: '#e7298a',
   Agriculture: '#4d7e16',
@@ -49,9 +49,9 @@ let overviewButton;
 // Empty layer for population-specific fire disturbances
 let fireLayer = L.geoJSON(null, {
   style: {
-    color: '#E87524',
+    color: '#e8762490',
     weight: 1,
-    fillColor: '#E87524',
+    fillColor: '#e8762490',
     fillOpacity: 0.5
   }
 });
