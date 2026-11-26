@@ -46,6 +46,18 @@ const populationFeatureLayers = [];
 // Keeps track of the Return to Québec Overview button
 let overviewButton;
 
+// Empty layer for population-specific fire disturbances
+let fireLayer = L.geoJSON(null, {
+  style: {
+    color: '#E87524',
+    weight: 1,
+    fillColor: '#E87524',
+    fillOpacity: 0.5
+  }
+});
+
+// Keeps track of the map's layer control
+let layerControl;
 
 
 function addCaribouPopup(feature, layer) {
@@ -72,8 +84,6 @@ function addCaribouPopup(feature, layer) {
   });
 }
 
-// Empty layer for population-specific fire disturbances
-let fireLayer = L.geoJSON(null); 
 
 // Shared function for selecting a population
 function selectPopulation(selectedLayer) {
@@ -106,15 +116,26 @@ const populationName = p.Local_Pop_Name;
 // Build the path to its fire GeoJSON file
 const fireFile = "../Data/Fire_by_POP/" + populationName + "_Fire.geojson";
 
-// Fetch the selected population's fire GeoJSON
+
 fetch(fireFile)
   .then(response => response.json())
   .then(data => {
-    console.log("Fire data for " + populationName + ":", data);
+
+    // Load the selected population's fire data
+    fireLayer.clearLayers();
+    fireLayer.addData(data);
+
+    // Add the fire layer to the map
+    fireLayer.addTo(map);
+
+    // Add the fire checkbox to the layer control
+  layerControl.addOverlay(fireLayer, 'Fire disturbances');
+
   })
   .catch(error => {
     console.error("Error loading fire data:", error);
   });
+
 
 // Display the population name as the panel heading
 document.getElementById('populationInfoName').textContent =
@@ -237,7 +258,7 @@ const allDisturbances = L.layerGroup(
 ).addTo(map);
 
 
-L.control.layers({
+layerControl = L.control.layers({
   'Caribou Populations': L.layerGroup([
     forestierLayer,
     gaspesieLayer
@@ -247,6 +268,8 @@ L.control.layers({
 }, {
   collapsed: false
 }).addTo(map);
+
+console.log("Layer control created:", layerControl);
 
 const disturbanceLegend = L.control({
   position: 'bottomright'
@@ -338,6 +361,12 @@ overviewControl.onAdd = function () {
 
   });
 
+  // Remove fire disturbances from the map
+  map.removeLayer(fireLayer);
+
+  // Remove fire disturbances from the layer control
+  layerControl.removeLayer(fireLayer);
+
   // Hide the Return button
   overviewButton.style.display = 'none';
 
@@ -377,13 +406,3 @@ map.fitBounds(forestierLayer.getBounds());
   console.error("GeoJSON loading failed:", err);
 });
 
-fetch("../Data/Fire_by_POP/Charlevoix_Fire.geojson")
-  .then(response => response.json())
-  .then(data => {
-    fireLayer.clearLayers();
-    fireLayer.addData(data);
-    fireLayer.addTo(map);
-  })
-  .catch(error => {
-    console.error("Error loading fire data:", error);
-  }); 
