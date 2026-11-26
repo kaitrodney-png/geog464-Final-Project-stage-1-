@@ -1,0 +1,10 @@
+{
+"type": "FeatureCollection",
+"name": "Joir River_Linear",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Class": "Road", "Year_added": 2015, "Shape_Length": 970.42717306448299, "source_dataset": "Quebec2020", "source_layer": "Quebec2020_Disturb_Perturb_Line", "source_feature_id": 5221 }, "geometry": { "type": "LineString", "coordinates": [ [ -59.902182, 51.432492 ], [ -59.902371, 51.430808 ], [ -59.902023, 51.429988 ], [ -59.899629, 51.429644 ], [ -59.897069, 51.430167 ], [ -59.895914, 51.430791 ], [ -59.894363, 51.431041 ], [ -59.892749, 51.430863 ] ] } },
+{ "type": "Feature", "properties": { "Class": "Airstrip", "Year_added": 2015, "Shape_Length": 1373.5374216940002, "source_dataset": "Quebec2020", "source_layer": "Quebec2020_Disturb_Perturb_Line", "source_feature_id": 7304 }, "geometry": { "type": "LineString", "coordinates": [ [ -60.008973, 51.55432 ], [ -60.010316, 51.542089 ] ] } },
+{ "type": "Feature", "properties": { "Class": "Road", "Year_added": 2015, "Shape_Length": 2266.3982967582047, "source_dataset": "Quebec2020", "source_layer": "Quebec2020_Disturb_Perturb_Line", "source_feature_id": 15317 }, "geometry": { "type": "LineString", "coordinates": [ [ -59.928207, 51.431389 ], [ -59.926768, 51.431774 ], [ -59.925614, 51.43196 ], [ -59.92481, 51.433116 ], [ -59.923989, 51.434085 ], [ -59.922675, 51.435058 ], [ -59.921369, 51.435611 ], [ -59.918752, 51.435691 ], [ -59.915798, 51.434685 ], [ -59.913364, 51.43447 ], [ -59.910905, 51.434486 ], [ -59.908002, 51.434764 ], [ -59.90462, 51.43493 ], [ -59.903327, 51.434644 ], [ -59.902928, 51.434138 ], [ -59.903203, 51.433333 ], [ -59.902161, 51.432475 ] ] } }
+]
+}

@@ -126,7 +126,7 @@ fetch(fireFile)
     fireLayer.addData(data);
 
     // Add the fire layer to the map
-    fireLayer.addTo(map);
+    //fireLayer.addTo(map);
 
     // Add the fire checkbox to the layer control
   layerControl.addOverlay(fireLayer, 'Fire disturbances');
