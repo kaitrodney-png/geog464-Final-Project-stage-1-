@@ -56,6 +56,15 @@ let fireLayer = L.geoJSON(null, {
   }
 });
 
+// Empty layer for population-specific linear disturbances
+let linearLayer = L.geoJSON(null, {
+  style: {
+    color: '#555B61',
+    weight: 2,
+    opacity: 0.8
+  }
+}); 
+
 // Keeps track of the map's layer control
 let layerControl;
 
@@ -136,6 +145,25 @@ fetch(fireFile)
     console.error("Error loading fire data:", error);
   });
 
+  
+  // Build the path to its linear disturbance GeoJSON file
+const linearFile = "../Data/Linear_by_POP/" + populationName + "_Linear.geojson";
+
+fetch(linearFile)
+  .then(response => response.json())
+  .then(data => {
+
+    // Load the selected population's linear data
+    linearLayer.clearLayers();
+    linearLayer.addData(data);
+
+    // Add the linear checkbox to the layer control
+    layerControl.addOverlay(linearLayer, 'Linear disturbances');
+
+  })
+  .catch(error => {
+    console.error("Error loading linear data:", error);
+  }); 
 
 // Display the population name as the panel heading
 document.getElementById('populationInfoName').textContent =
@@ -367,8 +395,12 @@ overviewControl.onAdd = function () {
   // Remove fire disturbances from the layer control
   layerControl.removeLayer(fireLayer);
 
+  map.removeLayer(linearLayer);
+  layerControl.removeLayer(linearLayer);
+
   // Hide the Return button
   overviewButton.style.display = 'none';
+
 
   // Close any open popup
   map.closePopup();
