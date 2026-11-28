@@ -56,15 +56,32 @@ let fireLayer = L.geoJSON(null, {
   }
 });
 
-// Empty layer for population-specific linear disturbances
-let linearLayer = L.geoJSON(null, {
-  style: {
-    color: '#555B61',
-    weight: 2,
-    opacity: 0.8
-  }
-}); 
+// Population-specific linear disturbances
+// Colours for each linear disturbance class
+const linearColours = {
+  "Road": "#D55E00",
+  "Powerline": "#0072B2",
+  "Railway": "#CC79A7",
+  "Pipeline": "#8C6D31",
+  "Dam": "#009E73",
+  "Airstrip": "#E6AB02",
+  "Unknown": "#777777"
+};
 
+// Create a separate Leaflet layer for each class
+const linearLayers = {};
+
+Object.keys(linearColours).forEach(function (className) {
+
+  linearLayers[className] = L.geoJSON(null, {
+    style: {
+      color: linearColours[className],
+      weight: 2,
+      opacity: 0.8
+    }
+  });
+
+});
 // Keeps track of the map's layer control
 let layerControl;
 
@@ -153,17 +170,51 @@ fetch(linearFile)
   .then(response => response.json())
   .then(data => {
 
-    // Load the selected population's linear data
-    linearLayer.clearLayers();
-    linearLayer.addData(data);
+     // Clear previous population's linear features and remove old toggles
+    Object.keys(linearLayers).forEach(function (className) {
 
-    // Add the linear checkbox to the layer control
-    layerControl.addOverlay(linearLayer, 'Linear disturbances');
+      const layer = linearLayers[className];
+
+      // Remove the layer from the map
+      map.removeLayer(layer);
+
+      // Remove its toggle from the layer control
+      layerControl.removeLayer(layer);
+
+      // Clear its previous features
+      layer.clearLayers();
+
+});
+
+    // Separate features by their disturbance class
+    Object.keys(linearLayers).forEach(function (className) {
+
+      const classFeatures = data.features.filter(function (feature) {
+        return (feature.properties.Class || "Unknown") === className;
+      });
+
+      // Add this class's features to its own layer
+      linearLayers[className].addData({
+        type: "FeatureCollection",
+        features: classFeatures
+      });
+
+      // Only add a toggle if this class has features
+      if (classFeatures.length > 0) {
+
+        layerControl.addOverlay(
+          linearLayers[className],
+          className
+       );
+
+      }
+
+    });
 
   })
   .catch(error => {
     console.error("Error loading linear data:", error);
-  }); 
+  });
 
 // Display the population name as the panel heading
 document.getElementById('populationInfoName').textContent =
@@ -395,8 +446,21 @@ overviewControl.onAdd = function () {
   // Remove fire disturbances from the layer control
   layerControl.removeLayer(fireLayer);
 
-  map.removeLayer(linearLayer);
-  layerControl.removeLayer(linearLayer);
+ // Remove all population-specific linear disturbance layers
+Object.keys(linearLayers).forEach(function (className) {
+
+  const layer = linearLayers[className];
+
+  // Remove the layer from the map
+  map.removeLayer(layer);
+
+  // Remove its toggle from the layer control
+  layerControl.removeLayer(layer);
+
+  // Clear its features
+  layer.clearLayers();
+
+});
 
   // Hide the Return button
   overviewButton.style.display = 'none';
